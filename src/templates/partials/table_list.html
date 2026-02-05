@@ -1,0 +1,12 @@
+{% if tables | length == 0 %}
+<p class="empty-state">No tables yet. Create one above.</p>
+{% else %}
+<table>
+    <thead><tr><th>Table Name</th><th>Actions</th></tr></thead>
+    <tbody>
+    {% for table in tables %}
+        {% include "partials/table_row.html" %}
+    {% endfor %}
+    </tbody>
+</table>
+{% endif %}

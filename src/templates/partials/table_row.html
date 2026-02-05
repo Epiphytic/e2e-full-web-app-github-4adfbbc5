@@ -1,0 +1,11 @@
+<tr id="table-{{ table.name }}">
+    <td><a href="/tables/{{ table.name }}">{{ table.name }}</a></td>
+    <td>
+        <button hx-delete="/api/tables/{{ table.name }}"
+                hx-confirm="Drop table '{{ table.name }}'?"
+                hx-target="#table-list"
+                hx-swap="innerHTML">
+            Drop
+        </button>
+    </td>
+</tr>

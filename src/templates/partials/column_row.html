@@ -1,0 +1,16 @@
+<tr id="col-{{ col.name }}">
+    <td>{{ col.name }}</td>
+    <td>{{ col.col_type }}</td>
+    <td>{{ col.notnull }}</td>
+    <td>{{ col.pk }}</td>
+    <td>
+        {% if not col.pk %}
+        <button hx-delete="/api/tables/{{ table_name }}/columns/{{ col.name }}"
+                hx-confirm="Remove column '{{ col.name }}'?"
+                hx-target="#column-list"
+                hx-swap="innerHTML">
+            Remove
+        </button>
+        {% endif %}
+    </td>
+</tr>

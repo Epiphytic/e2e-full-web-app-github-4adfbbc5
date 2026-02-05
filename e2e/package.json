@@ -1,0 +1,14 @@
+{
+  "name": "sqlite-editor-e2e",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.51.0",
+    "jsonwebtoken": "^9.0.0"
+  }
+}

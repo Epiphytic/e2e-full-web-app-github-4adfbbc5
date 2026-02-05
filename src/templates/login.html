@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Login - SQLite Editor{% endblock %}
+{% block content %}
+<div class="login-container">
+    <h2>Login</h2>
+    <form id="login-form">
+        <label for="token">JWT Token:</label>
+        <textarea id="token" name="token" rows="4" placeholder="Paste your JWT token here..." required></textarea>
+        <button type="submit">Login</button>
+    </form>
+    <div id="login-error" class="error hidden"></div>
+</div>
+<script>
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var token = document.getElementById('token').value.trim();
+        localStorage.setItem('jwt_token', token);
+        fetch('/api/tables', {
+            headers: { 'Authorization': 'Bearer ' + token }
+        }).then(function(r) {
+            if (r.ok) { window.location.href = '/dashboard'; }
+            else {
+                localStorage.removeItem('jwt_token');
+                document.getElementById('login-error').textContent = 'Invalid token';
+                document.getElementById('login-error').classList.remove('hidden');
+            }
+        });
+    });
+</script>
+{% endblock %}
