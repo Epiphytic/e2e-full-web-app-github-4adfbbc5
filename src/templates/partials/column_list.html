@@ -1,0 +1,12 @@
+{% if columns | length == 0 %}
+<p class="empty-state">No columns.</p>
+{% else %}
+<table>
+    <thead><tr><th>Name</th><th>Type</th><th>Not Null</th><th>PK</th><th>Actions</th></tr></thead>
+    <tbody>
+    {% for col in columns %}
+        {% include "partials/column_row.html" %}
+    {% endfor %}
+    </tbody>
+</table>
+{% endif %}

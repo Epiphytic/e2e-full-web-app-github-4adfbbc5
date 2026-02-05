@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}{{ table_name }} - SQLite Editor{% endblock %}
+{% block content %}
+<h2>Table: {{ table_name }}</h2>
+<a href="/dashboard">&larr; Back to tables</a>
+<h3>Columns</h3>
+<div id="add-column-form">
+    <input type="text" name="column_name" placeholder="Column name..."
+           pattern="[a-zA-Z_][a-zA-Z0-9_]*" required id="new-col-name">
+    <select name="column_type" id="new-col-type">
+        <option value="TEXT">TEXT</option>
+        <option value="INTEGER">INTEGER</option>
+        <option value="REAL">REAL</option>
+        <option value="BLOB">BLOB</option>
+        <option value="NUMERIC">NUMERIC</option>
+    </select>
+    <button hx-post="/api/tables/{{ table_name }}/columns"
+            hx-include="#new-col-name, #new-col-type"
+            hx-target="#column-list"
+            hx-swap="innerHTML"
+            hx-on::after-request="if(event.detail.successful) document.getElementById('new-col-name').value=''">
+        Add Column
+    </button>
+</div>
+<div id="column-list"
+     hx-get="/api/tables/{{ table_name }}/columns"
+     hx-trigger="load"
+     hx-swap="innerHTML">
+    Loading...
+</div>
+<div class="danger-zone">
+    <h3>Danger Zone</h3>
+    <button hx-delete="/api/tables/{{ table_name }}"
+            hx-confirm="Are you sure you want to drop table '{{ table_name }}'? This cannot be undone."
+            hx-target="body"
+            hx-swap="none"
+            hx-on::after-request="if(event.detail.successful) window.location.href='/dashboard'">
+        Drop Table
+    </button>
+</div>
+{% endblock %}
